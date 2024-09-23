@@ -1,6 +1,6 @@
 import Image from "next/image";
-// import fotoHacienda from "../photos/IMG_8782.jpg"
-// import fotoWateke from "../photos/IMG_2251.jpg"
+import fotoHacienda from "../photos/IMG_8782.jpg"
+import fotoWateke from "../photos/IMG_2251.jpg"
 
 export default function Home() {
   return (
@@ -8,7 +8,7 @@ export default function Home() {
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <Image
           className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
+          src={fotoHacienda}
           alt="Next.js logo"
           width={860}
           height={70}
@@ -16,7 +16,7 @@ export default function Home() {
         />
         <Image
           className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
+          src={fotoWateke}
           alt="Next.js logo"
           width={860}
           height={70}
