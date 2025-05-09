@@ -1,116 +1,66 @@
+// src/app/page.tsx
+import React from "react";
+import Image1 from "../photos/IMG_2039.jpg";
+import Image2 from "../photos/IMG_2043.jpg";
+import Image3 from "../photos/IMG_2046.jpg";
+import Image4 from "../photos/IMG_2052.jpg";
+import Image5 from "../photos/IMG_2053.jpg";
+import Image6 from "../photos/IMG_2055.jpg";
 import Image from "next/image";
-import fotoHacienda from "../photos/IMG_8782.jpg"
-import fotoWateke from "../photos/IMG_2251.jpg"
+import BackgroundImage from "../photos/IMG_2039.jpg"; // Reemplaza con tu imagen de fondo
 
-export default function Home() {
+const Home: React.FC = () => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+    <div>
+      <div className="relative h-screen">
         <Image
-          src={fotoHacienda}
-          alt="Next.js logo"
-          width={860}
-          height={70}
-          priority
+          src={BackgroundImage} // Cambia esto por la ruta de tu imagen de fondo
+          alt="Fondo"
+          layout="fill"
+          objectFit="cover"
+          className="z-0"
         />
-        <Image
-          src={fotoWateke}
-          alt="Next.js logo"
-          width={860}
-          height={70}
-          priority
-        />
-        <Image
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <p>Andrés Soriano Portfolio Photograph</p>
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        <div className="absolute inset-0 bg-black opacity-40"></div>
+        <div className="absolute inset-0 z-10 flex items-center justify-center">
+          <h1 className="text-4xl font-bold text-white">Hola Andrés</h1>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+
+      <div className="bg-gray-100 py-20">
+        <h2 className="mb-12 text-center text-4xl font-bold">Mis Proyectos</h2>
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-4 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            { src: Image1, alt: "Proyecto 1" },
+            { src: Image2, alt: "Proyecto 2" },
+            { src: Image3, alt: "Proyecto 3" },
+            { src: Image4, alt: "Proyecto 4" },
+            { src: Image5, alt: "Proyecto 5" },
+            { src: Image6, alt: "Proyecto 6" },
+          ].map((project, index) => (
+            <div
+              key={index}
+              className="overflow-hidden rounded-lg bg-white shadow-md"
+            >
+              <Image
+                src={project.src} // Ahora utiliza el objeto con la imagen
+                alt={project.alt}
+                width={500}
+                height={300}
+                className="h-48 w-full object-cover"
+              />
+              <div className="p-4">
+                <h3 className="text-lg font-semibold">{project.alt}</h3>
+                <p className="text-gray-600">
+                  Breve descripción de este proyecto. Aquí puedes hablar sobre
+                  el concepto y lo que lo hace especial.
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default Home;

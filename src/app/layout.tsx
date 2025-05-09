@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Navbar from "@/components/Navbar";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -16,6 +17,7 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Andrés Soriano",
   description: "Andrés Soriano Photographic Portfolio",
+  keywords: "fotografía, portafolio, Andrés Soriano, fotógrafo",
 };
 
 export default function RootLayout({
@@ -28,7 +30,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Navbar />
+        <main>{children}</main>
       </body>
     </html>
   );
