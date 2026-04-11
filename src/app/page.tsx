@@ -1,11 +1,11 @@
 // src/app/page.tsx
 import React from "react";
 import Image1 from "../photos/IMG_2039.jpg";
-import Image2 from "../photos/IMG_2043.jpg";
-import Image3 from "../photos/IMG_2046.jpg";
-import Image4 from "../photos/IMG_2052.jpg";
-import Image5 from "../photos/IMG_2053.jpg";
-import Image6 from "../photos/IMG_2055.jpg";
+// import Image2 from "../photos/IMG_2043.jpg";
+// import Image3 from "../photos/IMG_2046.jpg";
+// import Image4 from "../photos/IMG_2052.jpg";
+// import Image5 from "../photos/IMG_2053.jpg";
+// import Image6 from "../photos/IMG_2055.jpg";
 import Image from "next/image";
 import Link from "next/link";
 
