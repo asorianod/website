@@ -90,8 +90,10 @@ export default function Gallery() {
   useEffect(() => {
     fetch("/api/images")
       .then((res) => res.json())
-      .then(setImages)
-      .catch(console.error);
+      .then((data) => {
+        console.log(data); // 👈 confirma que llega array
+        setImages(data);
+      });
   }, []);
 
   const openImage = (img: ImageItem) => {

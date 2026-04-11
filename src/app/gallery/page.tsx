@@ -3,14 +3,15 @@
 import { useState, useEffect } from "react";
 import Gallery from "../../components/Gallery";
 
-
 export default function ProtectedGallery() {
   const [isAuth, setIsAuth] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [password, setPassword] = useState("");
 
   useEffect(() => {
     const saved = localStorage.getItem("auth");
     if (saved === "true") setIsAuth(true);
+    setLoading(false);
   }, []);
 
   const handleLogin = () => {
@@ -27,7 +28,15 @@ export default function ProtectedGallery() {
     setIsAuth(false);
   };
 
-  // ✅ SI YA ESTÁ LOGUEADO → MUESTRA GALERÍA
+  // 🔥 IMPORTANTE: esperar hidratación
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+
   if (isAuth) {
     return (
       <>
@@ -45,7 +54,6 @@ export default function ProtectedGallery() {
     );
   }
 
-  // 🔐 PANTALLA DE LOGIN
   return (
     <div className="flex h-screen items-center justify-center bg-black">
       <div className="w-full max-w-sm space-y-4 rounded-xl bg-white p-6">
@@ -53,7 +61,6 @@ export default function ProtectedGallery() {
 
         <input
           type="password"
-          placeholder="Contraseña"
           className="w-full rounded border p-2"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
