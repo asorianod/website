@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Gallery from "../../components/gallery";
+import Gallery from "../../components/Gallery";
+
 
 export default function ProtectedGallery() {
   const [isAuth, setIsAuth] = useState(false);
