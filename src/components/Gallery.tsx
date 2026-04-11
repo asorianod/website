@@ -77,9 +77,15 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
+type ImageItem = {
+  id: string;
+  url: string;
+  full: string;
+};
+
 export default function Gallery() {
-  const [images, setImages] = useState([]);
-  const [selected, setSelected] = useState(null);
+  const [images, setImages] = useState<ImageItem[]>([]);
+  const [selected, setSelected] = useState<ImageItem | null>(null);
 
   useEffect(() => {
     fetch("/api/images")
@@ -88,7 +94,7 @@ export default function Gallery() {
       .catch(console.error);
   }, []);
 
-  const openImage = (img) => {
+  const openImage = (img: ImageItem) => {
     const preload = new window.Image();
     preload.src = img.full;
     setSelected(img);
