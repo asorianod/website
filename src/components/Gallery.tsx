@@ -1,116 +1,149 @@
-// components/Gallery.tsx
+// // app/gallery/page.tsx
+// "use client"; // Marca la página como Client Component si usas hooks
+
+// import React from "react";
+// import Gallery from "../../components/Gallery";
+
+// // Importar las imágenes directamente desde la carpeta photos
+// // src/app/gallery/page.tsx
+// import Image1 from "../../photos/IMG_2039.jpg";
+// import Image2 from "../../photos/IMG_2043.jpg";
+// import Image3 from "../../photos/IMG_2046.jpg";
+// import Image4 from "../../photos/IMG_2052.jpg";
+// import Image5 from "../../photos/IMG_2053.jpg";
+// import Image6 from "../../photos/IMG_2055.jpg";
+// import Image7 from "../../photos/IMG_2058.jpg";
+// import Image8 from "../../photos/IMG_2059.jpg";
+// import Image9 from "../../photos/IMG_2064.jpg";
+// import Image10 from "../../photos/IMG_2067.jpg";
+// import Image11 from "../../photos/IMG_2070.jpg";
+// import Image12 from "../../photos/IMG_2072.jpg";
+// import Image13 from "../../photos/IMG_2074.jpg";
+// import Image14 from "../../photos/IMG_2077.jpg";
+// import Image15 from "../../photos/IMG_2080.jpg";
+// import Image16 from "../../photos/IMG_2086.jpg";
+// import Image17 from "../../photos/IMG_2089.jpg";
+// import Image18 from "../../photos/IMG_2093.jpg";
+// import Image19 from "../../photos/IMG_2094.jpg";
+// import Image20 from "../../photos/IMG_2097.jpg";
+// import Image21 from "../../photos/IMG_2099.jpg";
+// import Image22 from "../../photos/IMG_2106.jpg";
+// import Image23 from "../../photos/IMG_2110.jpg";
+// import Image24 from "../../photos/IMG_2114.jpg";
+
+// const images = [
+//   {
+//     src: "https://res.cloudinary.com/dudmp4xwa/image/upload/v1775930996/DSC06600_lliz3x.jpg",
+//     alt: "IMG_2039",
+//   },
+//   { src: Image2.src, alt: "IMG_2043" },
+//   { src: Image3.src, alt: "IMG_2046" },
+//   { src: Image4.src, alt: "IMG_2052" },
+//   { src: Image5.src, alt: "IMG_2053" },
+//   { src: Image6.src, alt: "IMG_2055" },
+//   { src: Image7.src, alt: "IMG_2058" },
+//   { src: Image8.src, alt: "IMG_2059" },
+//   { src: Image9.src, alt: "IMG_2064" },
+//   { src: Image10.src, alt: "IMG_2067" },
+//   { src: Image11.src, alt: "IMG_2070" },
+//   { src: Image12.src, alt: "IMG_2072" },
+//   { src: Image13.src, alt: "IMG_2074" },
+//   { src: Image14.src, alt: "IMG_2077" },
+//   { src: Image15.src, alt: "IMG_2080" },
+//   { src: Image16.src, alt: "IMG_2086" },
+//   { src: Image17.src, alt: "IMG_2089" },
+//   { src: Image18.src, alt: "IMG_2093" },
+//   { src: Image19.src, alt: "IMG_2094" },
+//   { src: Image20.src, alt: "IMG_2097" },
+//   { src: Image21.src, alt: "IMG_2099" },
+//   { src: Image22.src, alt: "IMG_2106" },
+//   { src: Image23.src, alt: "IMG_2110" },
+//   { src: Image24.src, alt: "IMG_2114" },
+// ];
+
+// const GalleryPage: React.FC = () => {
+//   return (
+//     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+//       <h1 className="mb-8 text-center text-4xl font-bold">Comunión Juan</h1>
+//       <Gallery images={images} />
+//     </div>
+//   );
+// };
+
+// export default GalleryPage;
+
 "use client";
 
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
-type ImageType = {
-  src: string; // Debe ser string
-  alt: string;
-};
+export default function Gallery() {
+  const [images, setImages] = useState([]);
+  const [selected, setSelected] = useState(null);
 
-const Gallery: React.FC<{ images: ImageType[] }> = ({ images }) => {
-  const [selectedImage, setSelectedImage] = useState<ImageType | null>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  useEffect(() => {
+    fetch("/api/images")
+      .then((res) => res.json())
+      .then(setImages)
+      .catch(console.error);
+  }, []);
 
-  const openModal = (index: number) => {
-    setCurrentIndex(index);
-    setSelectedImage(images[index]);
-  };
-
-  const closeModal = () => {
-    setSelectedImage(null);
-  };
-
-  const nextImage = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    setSelectedImage(images[(currentIndex + 1) % images.length]);
-  };
-
-  const prevImage = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length
-    );
-    setSelectedImage(
-      images[(currentIndex - 1 + images.length) % images.length]
-    );
+  const openImage = (img) => {
+    const preload = new window.Image();
+    preload.src = img.full;
+    setSelected(img);
   };
 
   return (
-    <div>
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
-        {images.map((image, index) => (
+    <div className="bg-gray-100 py-20">
+      <h2 className="mb-12 text-center text-4xl font-bold">Comunión Juan</h2>
+
+      {/* GRID */}
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-4 sm:grid-cols-2 lg:grid-cols-3">
+        {images.map((img, index) => (
           <div
-            key={index}
-            className="relative cursor-pointer"
-            onClick={() => openModal(index)}
+            key={img.id}
+            onClick={() => openImage(img)}
+            className="group cursor-pointer overflow-hidden rounded-xl shadow-sm"
           >
-            <Image
-              src={image.src} // Este src ahora es string
-              alt={image.alt}
-              width={500} // Aumentado a 400 para que sean más grandes
-              height={500} // Aumentado a 300 para que sean más grandes
-              className="h-full w-full rounded-lg object-cover"
-            />
+            <div className="relative aspect-[4/5] w-full">
+              <Image
+                src={img.url}
+                alt=""
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                priority={index < 2}
+                className="object-cover transition duration-500 group-hover:scale-105"
+              />
+            </div>
           </div>
         ))}
       </div>
 
-      {/* Modal para la imagen seleccionada */}
-      {selectedImage && (
+      {/* LIGHTBOX */}
+      {selected && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75"
-          onClick={closeModal} // Cierra el modal al hacer clic en el fondo
+          onClick={() => setSelected(null)}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
         >
-          <div
-            className="relative max-w-3xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {" "}
-            {/* Previene el cierre al hacer clic en la imagen */}
-            <button
-              onClick={closeModal}
-              className="absolute right-4 top-4 text-2xl text-white opacity-75 transition-opacity hover:opacity-100"
-            >
-              &times;
-            </button>
-            <button
-              onClick={prevImage}
-              className="absolute left-4 top-1/2 -translate-y-1/2 transform text-2xl text-white opacity-75 transition-opacity hover:opacity-100"
-            >
-              &#9664;
-            </button>
-            <button
-              onClick={nextImage}
-              className="absolute right-4 top-1/2 -translate-y-1/2 transform text-2xl text-white opacity-75 transition-opacity hover:opacity-100"
-            >
-              &#9654;
-            </button>
+          <div className="relative h-[85vh] w-full max-w-6xl">
             <Image
-              src={selectedImage.src}
-              alt={selectedImage.alt}
-              width={800}
-              height={600}
-              className="rounded-lg"
+              src={selected.full}
+              alt=""
+              fill
+              sizes="100vw"
+              className="object-contain"
             />
-            <button
-              onClick={() => {
-                const link = document.createElement("a");
-                link.href = selectedImage.src;
-                link.download = selectedImage.alt;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-              }}
-              className="absolute bottom-4 left-1/2 -translate-x-1/2 transform rounded bg-white px-4 py-2 text-black opacity-75 transition-opacity hover:opacity-100"
-            >
-              Download
-            </button>
           </div>
+
+          <button
+            onClick={() => setSelected(null)}
+            className="absolute right-6 top-6 text-3xl text-white"
+          >
+            ✕
+          </button>
         </div>
       )}
     </div>
   );
-};
-
-export default Gallery;
+}
