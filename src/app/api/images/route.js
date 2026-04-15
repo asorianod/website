@@ -17,7 +17,7 @@ export async function GET() {
         expression: "public_id:asorianod*",
         max_results: 50,
       }),
-    }
+    },
   );
 
   const data = await res.json();
